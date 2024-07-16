@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="20240713-1526" author="jinxinyu">
+        <preConditions onFail="MARK_RAN" onFailMessage="major表已存在">
+            <not>
+                <tableExists tableName="major"/>
+            </not>
+        </preConditions>
+        <comment>创建专业信息表</comment>
+        <createTable tableName="major">
+            <column name="major_id" type="int" autoIncrement="true" remarks="专业id">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="major_name" type="varchar(50)" remarks="专业名称">">
+                <constraints nullable="false"/>
+            </column>
+            <column name="major_code" type="varchar(50)" remarks="专业代码">
+                <constraints nullable="false"/>
+            </column>
+            <column name="major_desc" type="varchar(200)" remarks="专业描述"/>
+            <column name="need_subject" type="int" remarks="什么学科的学生才能报名：1.理科化；2.理科非化；3.文科；4.不限"/>
+            <column name="is_deleted" type="int" defaultValue="0" remarks="是否被删除：1.是；0.否"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20240713-1539" author="jinixnyu">
+        <preConditions onFail="MARK_RAN" onFailMessage="university表已存在">
+            <not>
+                <tableExists tableName="university"/>
+            </not>
+        </preConditions>
+        <comment>创建大学信息表</comment>
+        <createTable tableName="university">
+            <column name="university_id" type="int" autoIncrement="true" remarks="大学id">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="university_name" type="varchar(50)" remarks="大学名称">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="university_code" type="varchar(50)" remarks="大学代码">
+                <constraints nullable="false"/>
+            </column>
+            <column name="university_desc" type="varchar(200)" remarks="大学描述"/>
+            <column name="is_211" type="int" remarks="是否是211：1.是；0.否"/>
+            <column name="is_985" type="int" remarks="是否是985：1.是；0.否"/>
+            <column name="is_double_class" type="int" remarks="是否是双一流：1.是；0.否"/>
+            <column name="is_public" type="int" remarks="是否是公立：1.是；0.否"/>
+            <column name="is_undergraduate" type="int" remarks="是否是本科：1.是；0.否"/>
+            <column name="province" type="varchar(50)" remarks="省份"/>
+            <column name="city" type="varchar(50)" remarks="城市"/>
+            <column name="is_deleted" type="int" defaultValue="0" remarks="是否被删除：1.是；0.否"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20240713-1547" author="jinixnyu">
+        <preConditions onFail="MARK_RAN" onFailMessage="university_major_config表已存在">
+            <not>
+                <tableExists tableName="university_major_config"/>
+            </not>
+        </preConditions>
+        <comment>创建大学专业信息表</comment>
+        <createTable tableName="university_major_config">
+            <column name="id" type="int" autoIncrement="true" remarks="id">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="university_id" type="int" remarks="大学id">
+                <constraints nullable="false"/>
+            </column>
+            <column name="major_id" type="int" remarks="专业id">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ranking" type="int" defaultValue="-1"
+                    remarks="专业排名:-1.暂未参加排名；0.A+；1.A；2.A-；3.B+;4.B;5.B-;..."/>
+            <column name="university_major_desc" type="varchar(200)" remarks="该大学专业描述"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20240713-1632" author="jinixnyu">
+        <preConditions onFail="MARK_RAN" onFailMessage="score_line表已存在">
+            <not>
+                <tableExists tableName="score_line"/>
+            </not>
+        </preConditions>
+        <comment>创建历年专业分数线表</comment>
+        <createTable tableName="score_line">
+            <column name="id" type="int" autoIncrement="true" remarks="id">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="university_id" type="int" remarks="大学id">
+                <constraints nullable="false"/>
+            </column>
+            <column name="major_id" type="int" remarks="专业id">
+                <constraints nullable="false"/>
+            </column>
+            <column name="score_line" type="int" remarks="分数线">
+                <constraints nullable="false"/>
+            </column>
+            <column name="year" type="int" remarks="年份">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
