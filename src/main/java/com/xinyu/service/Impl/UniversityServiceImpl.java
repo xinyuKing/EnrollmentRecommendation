@@ -1,10 +1,11 @@
 package com.xinyu.service.Impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xinyu.domain.entity.UniversityEntity;
-import com.xinyu.domain.param.UniversityParam;
+import com.xinyu.domain.param.UniversityCondition;
 import com.xinyu.mapper.UniversityMapper;
 import com.xinyu.service.IUniversityService;
+import com.xinyu.utils.parse.QueryModel;
+import com.xinyu.utils.parse.QueryModelParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,9 @@ public class UniversityServiceImpl implements IUniversityService {
     private UniversityMapper mapper;
 
     @Override
-    public List<UniversityEntity> getList(UniversityParam param) {
-        return mapper.selectByParam(param);
+    public List<UniversityEntity> getList(QueryModel<UniversityCondition> queryModel) {
+        List<String> whereList = QueryModelParser.parseCondition(queryModel.getCondition(), "a");
+        List<String> orderList = QueryModelParser.parseOrder(queryModel.getSorts(), UniversityEntity.class, "a");
+        return mapper.selectByParam(whereList,orderList, queryModel.getPaging());
     }
 }

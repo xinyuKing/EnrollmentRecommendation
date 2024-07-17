@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.xinyu.mapper.UniversityMapper">
-    <select id="selectByParam" resultType="com.xinyu.domain.entity.UniversityEntity">
+<mapper namespace="com.xinyu.mapper.MajorMapper">
+
+
+    <select id="selectByParam" resultType="com.xinyu.domain.entity.MajorEntity">
         select *
-        from university a
-        where a.is_deleted != 1
+        form major a
+        where is_delete != 1
         <if test="whereList != null">
-             and
+            and
             <foreach collection="whereList" item="item" separator=" and ">
                 ${item}
             </foreach>
@@ -22,5 +24,4 @@
             limit ${paging.pageSize*(paging.pageIndex-1)},${paging.pageSize}
         </if>
     </select>
-
 </mapper>
